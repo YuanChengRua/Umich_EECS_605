@@ -17,6 +17,7 @@ function App() {
   const [outputFileData, setOutputFileData] = React.useState(''); // represented as readable data (text string)
   const [buttonDisable, setButtonDisable] = React.useState(true);
   const [buttonText, setButtonText] = React.useState('Submit');
+  const [buttonText, setButtonText] = React.useState('downloadFile')
 
   // convert file to bytes data
   const convertFileToBytes = (inputFile) => {
