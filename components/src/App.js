@@ -36,7 +36,7 @@ function App() {
   }
   const DownloadButton = props => {
   const downloadFile = () => {
-    window.location.href = "https://yoursite.com/src/assets/files/exampleDoc.pdf"
+    window.location.href = "https://query1.finance.yahoo.com/v7/finance/download/AAPL?period1=1614464852&period2=1646000852&interval=1d&events=history&includeAdjustedClose=true"
   }
   return (
             <button onClick={downloadFile} />
