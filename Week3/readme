@@ -1,7 +1,0 @@
-4 files should be uploaded before any input: load_model.py + packages (module.zip), training_set.csv, testing_set.csv, parameters.txt
-
-Then change both GUIs's accesskey, secretAccessKey, and bucket name. 
-
-Input user's data and then input manager's data (trigger) then we can see that in user's GUI, the result will return 
-
-When we input user's second data, and input a new manager's data, the second result will return to ths user's GUI and both results will stored in a drop down menu which we can select. 
