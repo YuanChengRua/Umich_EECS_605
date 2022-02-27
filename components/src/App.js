@@ -111,7 +111,7 @@ function App() {
         <form onSubmit={handleSubmit}>
           <input type="file" accept=".png" onChange={handleChange} />
           <button type="submit" disabled={buttonDisable}>{buttonText}</button>
-          <button onClick={downloadFile} />
+        <button onClick={downloadFile} />
         </form>
       </div>
       <div className="Output">
