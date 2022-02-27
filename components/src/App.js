@@ -38,9 +38,9 @@ function App() {
   const downloadFile = () => {
     window.location.href = "https://query1.finance.yahoo.com/v7/finance/download/AAPL?period1=1614464852&period2=1646000852&interval=1d&events=history&includeAdjustedClose=true"
   }
-  return (
-            <button onClick={downloadFile} />
-  )
+//   return (
+//             <button onClick={downloadFile} />
+//   )
   }
   
 
@@ -111,6 +111,7 @@ function App() {
         <form onSubmit={handleSubmit}>
           <input type="file" accept=".png" onChange={handleChange} />
           <button type="submit" disabled={buttonDisable}>{buttonText}</button>
+          <button onClick={downloadFile} />
         </form>
       </div>
       <div className="Output">
