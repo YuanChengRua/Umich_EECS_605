@@ -42,7 +42,7 @@ function App() {
             <button onClick={downloadFile} />
   )
   }
-  export default DownloadButton;
+  
 
   // handle file input
   const handleChange = async (event) => {
@@ -120,5 +120,5 @@ function App() {
     </div>
   );
 }
-
+export default DownloadButton;
 export default App;
