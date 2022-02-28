@@ -16,8 +16,7 @@ function App() {
   const [inputFileData, setInputFileData] = React.useState(''); // represented as bytes data (string)
   const [outputFileData, setOutputFileData] = React.useState(''); // represented as readable data (text string)
   const [buttonDisable, setButtonDisable] = React.useState(true);
-//   const [buttonText, setButtonText] = React.useState('Submit');
-  const [buttonText, setButtonText] = React.useState('downloadFile');
+  const [buttonText, setButtonText] = React.useState('Submit');
 
   // convert file to bytes data
   const convertFileToBytes = (inputFile) => {
@@ -34,14 +33,6 @@ function App() {
         reject(error);
       };
     });
-  }
-  const DownloadButton = props => {
-  const downloadFile = () => {
-    window.location.href = "https://query1.finance.yahoo.com/v7/finance/download/AAPL?period1=1614464852&period2=1646000852&interval=1d&events=history&includeAdjustedClose=true"
-  }
-//   return (
-//             <button onClick={downloadFile} />
-//   )
   }
   
 
@@ -112,7 +103,6 @@ function App() {
         <form onSubmit={handleSubmit}>
           <input type="file" accept=".png" onChange={handleChange} />
           <button type="submit" disabled={buttonDisable}>{buttonText}</button>
-        <button onClick={downloadFile} />
         </form>
       </div>
       <div className="Output">
