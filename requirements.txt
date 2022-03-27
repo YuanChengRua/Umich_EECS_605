@@ -1,5 +1,0 @@
-matplotlib==3.5.1
-onnxruntime==1.11.0
-pandas==1.4.1
-numpy==1.22.3
-
