@@ -7,6 +7,9 @@ import pandas as pd
 import numpy as np
 import onnxruntime as rt
 import matplotlib.pyplot as plt
+import traceback
+import yfinance as yf
+from datetime import datetime
 # from keras.models import load_model
 
 
@@ -36,27 +39,30 @@ def lambda_handler(event, context):
     output_file_path = os.path.join(lambda_temp_directory, output_file_name)
     output_rmse_file_path = os.path.join(lambda_temp_directory, output_rmse_file_name)
 
-
     try:
         stockDataB64 = event["csv"]
-        stockBytes = base64.b64decode(stockDataB64.encode("utf8"))
-        with open(input_file_path, "wb") as f:
-            f.write(stockBytes)
-            f.close()
+        # stockBytes = base64.b64decode(stockDataB64.encode("utf8"))
+        # with open(input_file_path, "wb") as f:
+        #     f.write(stockBytes)
+        #     f.close()
+        end = datetime.now()
+        start = datetime(end.year-3, end.month, end.day)
+        stockData_df = yf.download(str(stockDataB64), start, end)
+
     except Exception as error:
         return {
             "statusCode": 400,
             "errorMessage": json.dumps(
                 {
-                    "outputResultsData": str(error)
+                    "outputResultsData": str(traceback.format_exc())
                 }
             )
         }
     try:
-        image = pd.read_csv(input_file_path)
+        image = stockData_df
         data_for_predict = image.filter(['Adj Close'])  # this is my real y
-        data_for_predict['Date'] = image['Date']
-        data_df = data_for_predict.set_index('Date')
+        # data_for_predict['Date'] = image.index()
+        data_df = data_for_predict
 
         processed_image = preprocess(data_df)
 
@@ -77,7 +83,7 @@ def lambda_handler(event, context):
             "statusCode": 400,
             "errorMessage": json.dumps(
                 {
-                    "outputResultsData": str(error)
+                    "outputResultsData": str(traceback.format_exc())
                 }
             )
         }
@@ -93,11 +99,14 @@ def lambda_handler(event, context):
         temp = temp.reshape(-1,)
         predictions_df_new['real'] = temp.tolist()
         # predictions_df.to_csv(output_file_path_pred, sep='\t', encoding='utf-8', header=['prediction', 'real_data'])  # convert to txt tile and send to the next api
+
+
         time_data_1 = pd.to_datetime(train_data.index)
         time_data_2 = pd.to_datetime(predictions_df_new.index)
         fig, ax = plt.subplots(figsize=(16,6))
         ax.plot(time_data_1, train_data['Adj Close'])
-        ax.plot(time_data_2, predictions_df_new[['prediction', 'real']])
+        ax.plot(time_data_2, predictions_df_new.iloc[:, 0])
+        ax.plot(time_data_2, predictions_df_new.iloc[:, 1])
         plt.title('Prediction for Stock Price')
         plt.xlabel('Date', fontsize=18)
         plt.ylabel('Close Price USD', fontsize=18)
@@ -118,7 +127,7 @@ def lambda_handler(event, context):
             "statusCode": 400,
             "errorMessage": json.dumps(
                 {
-                    "outputResultsData": str(error)
+                    "outputResultsData": str(time_data_2.shape)
                 }
             )
         }
@@ -137,7 +146,7 @@ def lambda_handler(event, context):
             "statusCode": 400,
             "errorMessage": json.dumps(
                 {
-                    "outputResultsData": str(error)
+                    "outputResultsData": str(traceback.format_exc())
                 }
             )
         }
